@@ -1,42 +1,42 @@
 # EduPlatform (Frontend)
 
-EduPlatform is a modern, comprehensive learning management system (LMS) frontend built with **React** and **Vite**. It offers a rich, interactive educational experience tailored for both students and instructors, featuring advanced tools such as an AI-powered Career Assessment and an interactive chatbot.
+EduPlatform is a modern, comprehensive learning management system (LMS) frontend built with React and Vite. It offers a rich, interactive educational experience tailored for both students and instructors, featuring advanced tools such as an AI-powered Career Assessment and an interactive chatbot.
 
-## 🚀 Key Features
+## Key Features
 
-### 👥 Role-Based Access Control
+### Role-Based Access Control
 - **Students**: Access to course enrollments, personalized dashboards, a dedicated course player, and settings.
 - **Instructors**: Dedicated instructor dashboard with capabilities to add, update, and manage course content.
 
-### 🧠 AI-Powered Career Assessment
-A sophisticated 3-stage career discovery tool powered by **Google's Gemini Pro AI**:
+### AI-Powered Career Assessment
+A sophisticated 3-stage career discovery tool powered by Google's Gemini Pro AI:
 1. **Interest Discovery**: Identifies natural interests and preferences across multiple domains.
 2. **Knowledge Assessment**: Evaluates technical readiness and baseline knowledge.
 3. **Personalized Evaluation**: Dynamically generates targeted questions to recommend personalized career paths, certifications, and job opportunities.
 
-### 💬 Interactive Chatbot
+### Interactive Chatbot
 - A floating AI chatbot integrated directly into the platform to assist users with navigation, queries, and contextual help.
 
-### 📚 Course Management & Player
+### Course Management and Player
 - Seamless browsing and enrollment of courses.
 - Dedicated `CoursePlayer` component for an immersive learning experience.
 - Instructor tools (`AddCourse`, `UpdateCourse`, `AdminCourses`) to effortlessly manage the curriculum.
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 - **Core Framework**: [React 18](https://reactjs.org/) & [Vite](https://vitejs.dev/)
 - **Routing**: [React Router v6](https://reactrouter.com/)
 - **State Management**: 
   - [Redux Toolkit](https://redux-toolkit.js.org/) (for global auth state)
   - [TanStack React Query](https://tanstack.com/query/latest) (for asynchronous state and data fetching)
-- **Styling & UI**: 
+- **Styling and UI**: 
   - [Tailwind CSS](https://tailwindcss.com/)
   - [Headless UI](https://headlessui.com/)
   - [Heroicons](https://heroicons.com/) & [React Icons](https://react-icons.github.io/react-icons/)
-- **Forms & Validation**: [Formik](https://formik.org/) & [Yup](https://github.com/jquense/yup)
+- **Forms and Validation**: [Formik](https://formik.org/) & [Yup](https://github.com/jquense/yup)
 - **API Client**: [Axios](https://axios-http.com/)
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 src/
@@ -58,13 +58,13 @@ src/
 └── main.jsx            # Entry point
 ```
 
-## ⚙️ Setup & Installation
+## Setup and Installation
 
 ### Prerequisites
 - Node.js (v16 or higher recommended)
 - npm or yarn
 
-### 1. Clone & Install
+### 1. Clone and Install Dependencies
 ```bash
 # Navigate to the project directory
 cd EduPlatform
@@ -99,7 +99,7 @@ This generates the optimized production build in the `dist` folder. You can prev
 npm run preview
 ```
 
-## 📝 Scripts Overview
+## Scripts Overview
 
 - `npm run dev`: Starts the Vite development server.
 - `npm run build`: Compiles and bundles the application for production.
