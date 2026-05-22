@@ -46,7 +46,6 @@ export default function App() {
 
     switch (userProfile?.role) {
       case "instructor":
-        return InstructorNavbar;
       case "student":
         return PrivateNavbar;
       default:

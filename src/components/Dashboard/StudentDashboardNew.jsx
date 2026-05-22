@@ -36,6 +36,18 @@ const StudentDashboard = () => {
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [coursesProgress, setCoursesProgress] = useState([]);
 
+  const getInterestAreaStyle = (code) => {
+    const styles = {
+      R: { color: "text-emerald-400", bgColor: "bg-emerald-500/10", borderColor: "border-emerald-500/20" },
+      I: { color: "text-sky-400", bgColor: "bg-sky-500/10", borderColor: "border-sky-500/20" },
+      A: { color: "text-purple-400", bgColor: "bg-purple-500/10", borderColor: "border-purple-500/20" },
+      S: { color: "text-amber-400", bgColor: "bg-amber-500/10", borderColor: "border-amber-500/20" },
+      E: { color: "text-rose-400", bgColor: "bg-rose-500/10", borderColor: "border-rose-500/20" },
+      C: { color: "text-indigo-400", bgColor: "bg-indigo-500/10", borderColor: "border-indigo-500/20" }
+    };
+    return styles[code] || { color: "text-slate-400", bgColor: "bg-white/5", borderColor: "border-white/5" };
+  };
+
   // Load assessment results and enrolled courses on component mount and when user returns to dashboard
   useEffect(() => {
     loadAssessmentResults();
@@ -187,50 +199,54 @@ const StudentDashboard = () => {
   const recentActivity = [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div className="min-h-screen bg-[#0a0d14] text-slate-100 py-0 relative overflow-hidden">
+      {/* Background Glows */}
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-900/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-cyan-900/10 rounded-full blur-[120px] pointer-events-none" />
+
       {/* Enhanced Header */}
-      <div className="bg-white shadow-sm border-b border-gray-100">
+      <div className="bg-white/3 backdrop-blur-xl border-b border-white/5 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="flex items-center space-x-6">
-              <div className="h-20 w-20 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg">
+              <div className="h-20 w-20 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(124,58,237,0.3)]">
                 <FaUserGraduate className="h-10 w-10 text-white" />
               </div>
               <div>
-                <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
                   Welcome back, {userProfile?.username || "Student"}!
                 </h1>
-                <p className="text-gray-600 mt-2 text-lg">Continue your learning journey and achieve your goals</p>
+                <p className="text-slate-400 mt-2 text-lg">Continue your learning journey and achieve your goals</p>
                 <div className="flex items-center space-x-4 mt-3">
                   {studentStats.studyStreak > 0 && (
-                    <div className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                    <div className="bg-orange-500/10 border border-orange-500/20 text-orange-400 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                       <FaFire className="mr-1" />
                       {studentStats.studyStreak} day streak
                     </div>
                   )}
                   {studentStats.coursesEnrolled === 0 && (
-                    <div className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">
+                    <div className="bg-purple-500/10 border border-purple-500/20 text-purple-400 px-3 py-1 rounded-full text-sm font-medium">
                       🚀 New Member — Start your journey!
                     </div>
                   )}
                 </div>
               </div>
             </div>
-            <div className="hidden lg:flex items-center space-x-4">
-              <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 px-4 py-3 rounded-xl">
-                <div className="text-green-700 text-sm font-medium">Weekly Goal</div>
-                <div className="text-green-900 text-lg font-bold">{studentStats.weeklyCompleted}/{studentStats.weeklyGoal} courses</div>
+            <div className="flex items-center space-x-4">
+              <div className="bg-emerald-500/10 border border-emerald-500/20 px-4 py-3 rounded-xl">
+                <div className="text-emerald-400 text-sm font-medium">Weekly Goal</div>
+                <div className="text-emerald-200 text-lg font-bold">{studentStats.weeklyCompleted}/{studentStats.weeklyGoal} courses</div>
               </div>
               <Link
                 to="/"
-                className="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 px-6 py-3 rounded-xl hover:from-gray-200 hover:to-gray-300 transition duration-200 flex items-center space-x-2 shadow-lg font-medium border border-gray-300"
+                className="bg-white/5 text-slate-300 px-6 py-3 rounded-xl hover:bg-white/10 transition duration-200 flex items-center space-x-2 shadow-lg font-medium border border-white/10"
               >
                 <FaHome />
-                <span>Back to Home</span>
+                <span className="hidden sm:inline">Back to Home</span>
               </Link>
               <Link
                 to="/courses"
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition duration-200 flex items-center space-x-2 shadow-lg font-medium"
+                className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white px-6 py-3 rounded-xl hover:from-purple-700 hover:to-cyan-600 transition duration-200 flex items-center space-x-2 shadow-[0_0_15px_rgba(124,58,237,0.3)] font-medium border border-white/10"
               >
                 <FaPlus />
                 <span>Browse Courses</span>
@@ -240,67 +256,67 @@ const StudentDashboard = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
         {/* Enhanced Stats Overview */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 hover:shadow-lg transition duration-300 group">
+          <div className="bg-white/3 backdrop-blur-md border border-white/5 rounded-2xl shadow-lg p-6 hover:border-white/10 transition duration-300 group">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Courses Enrolled</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">{studentStats.coursesEnrolled}</p>
-                <p className="text-sm text-gray-400 flex items-center mt-2">
+                <p className="text-sm font-medium text-slate-400">Courses Enrolled</p>
+                <p className="text-3xl font-bold text-white mt-1">{studentStats.coursesEnrolled}</p>
+                <p className="text-sm text-slate-500 flex items-center mt-2">
                   {studentStats.coursesEnrolled === 0 ? 'No courses yet' : `${studentStats.coursesEnrolled} active`}
                 </p>
               </div>
-              <div className="bg-blue-100 p-4 rounded-xl group-hover:scale-110 transition duration-300">
-                <FaBookOpen className="text-blue-600 text-xl" />
+              <div className="bg-blue-500/10 p-4 rounded-xl text-blue-400 group-hover:scale-110 transition duration-300">
+                <FaBookOpen className="text-xl" />
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 hover:shadow-lg transition duration-300 group">
+          <div className="bg-white/3 backdrop-blur-md border border-white/5 rounded-2xl shadow-lg p-6 hover:border-white/10 transition duration-300 group">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Completed Courses</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">{studentStats.coursesCompleted}</p>
-                <p className="text-sm text-gray-400 flex items-center mt-2">
+                <p className="text-sm font-medium text-slate-400">Completed Courses</p>
+                <p className="text-3xl font-bold text-white mt-1">{studentStats.coursesCompleted}</p>
+                <p className="text-sm text-slate-500 flex items-center mt-2">
                   {studentStats.coursesEnrolled > 0
                     ? `${Math.round((studentStats.coursesCompleted / studentStats.coursesEnrolled) * 100)}% completion rate`
                     : 'Enroll to get started'}
                 </p>
               </div>
-              <div className="bg-green-100 p-4 rounded-xl group-hover:scale-110 transition duration-300">
-                <FaGraduationCap className="text-green-600 text-xl" />
+              <div className="bg-emerald-500/10 p-4 rounded-xl text-emerald-400 group-hover:scale-110 transition duration-300">
+                <FaGraduationCap className="text-xl" />
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 hover:shadow-lg transition duration-300 group">
+          <div className="bg-white/3 backdrop-blur-md border border-white/5 rounded-2xl shadow-lg p-6 hover:border-white/10 transition duration-300 group">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Learning Hours</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">{studentStats.totalHours}h</p>
-                <p className="text-sm text-gray-400 flex items-center mt-2">
+                <p className="text-sm font-medium text-slate-400">Learning Hours</p>
+                <p className="text-3xl font-bold text-white mt-1">{studentStats.totalHours}h</p>
+                <p className="text-sm text-slate-500 flex items-center mt-2">
                   {studentStats.totalHours === 0 ? 'Start learning today' : `${studentStats.totalHours}h total`}
                 </p>
               </div>
-              <div className="bg-purple-100 p-4 rounded-xl group-hover:scale-110 transition duration-300">
-                <FaClock className="text-purple-600 text-xl" />
+              <div className="bg-purple-500/10 p-4 rounded-xl text-purple-400 group-hover:scale-110 transition duration-300">
+                <FaClock className="text-xl" />
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 hover:shadow-lg transition duration-300 group">
+          <div className="bg-white/3 backdrop-blur-md border border-white/5 rounded-2xl shadow-lg p-6 hover:border-white/10 transition duration-300 group">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Certificates</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">{studentStats.certificatesEarned}</p>
-                <p className="text-sm text-gray-400 flex items-center mt-2">
+                <p className="text-sm font-medium text-slate-400">Certificates</p>
+                <p className="text-3xl font-bold text-white mt-1">{studentStats.certificatesEarned}</p>
+                <p className="text-sm text-slate-500 flex items-center mt-2">
                   {studentStats.certificatesEarned === 0 ? 'Complete courses to earn' : `${studentStats.certificatesEarned} earned`}
                 </p>
               </div>
-              <div className="bg-yellow-100 p-4 rounded-xl group-hover:scale-110 transition duration-300">
-                <FaTrophy className="text-yellow-600 text-xl" />
+              <div className="bg-amber-500/10 p-4 rounded-xl text-amber-400 group-hover:scale-110 transition duration-300">
+                <FaTrophy className="text-xl" />
               </div>
             </div>
           </div>
@@ -308,32 +324,32 @@ const StudentDashboard = () => {
 
         {/* Career Assessment Results Section */}
         {latestAssessment && (
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 mb-8">
-            <div className="p-6 border-b border-gray-100">
-              <div className="flex items-center justify-between">
+          <div className="bg-white/3 backdrop-blur-xl border border-white/5 rounded-2xl shadow-lg mb-8">
+            <div className="p-6 border-b border-white/5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-center space-x-3">
-                  <div className="bg-indigo-100 p-3 rounded-xl">
-                    <FaBrain className="text-indigo-600 text-xl" />
+                  <div className="bg-purple-500/10 p-3 rounded-xl">
+                    <FaBrain className="text-purple-400 text-xl" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-gray-900">Your Career Assessment</h2>
-                    <p className="text-gray-600">Last taken: {assessmentService.formatDate(latestAssessment.completedAt)}</p>
+                    <h2 className="text-xl font-bold text-white">Your Career Assessment</h2>
+                    <p className="text-slate-400 text-sm">Last taken: {assessmentService.formatDate(latestAssessment.completedAt)}</p>
                   </div>
                 </div>
                 <div className="flex space-x-3">
                   <Link
                     to="/assessment"
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200 flex items-center space-x-2"
+                    className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white px-4 py-2 rounded-lg hover:from-purple-700 hover:to-cyan-600 transition duration-200 flex items-center space-x-2 border border-white/10 shadow-lg text-sm font-medium"
                   >
-                    <FaRedo className="text-sm" />
+                    <FaRedo className="text-xs" />
                     <span>Retake Assessment</span>
                   </Link>
                   {assessmentResults.length > 1 && (
                     <button
                       onClick={() => {/* TODO: Show assessment history modal */}}
-                      className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition duration-200 flex items-center space-x-2"
+                      className="bg-white/5 text-slate-300 px-4 py-2 rounded-lg hover:bg-white/10 transition duration-200 flex items-center space-x-2 border border-white/5 text-sm font-medium"
                     >
-                      <FaHistory className="text-sm" />
+                      <FaHistory className="text-xs" />
                       <span>View History ({assessmentResults.length})</span>
                     </button>
                   )}
@@ -346,23 +362,24 @@ const StudentDashboard = () => {
                 {/* Top 3 Interest Areas */}
                 {latestAssessment.topInterests && latestAssessment.topInterests.slice(0, 3).map((interest, index) => {
                   const interestInfo = assessmentService.getInterestAreaInfo(interest);
+                  const darkStyle = getInterestAreaStyle(interest);
                   return (
-                    <div key={interest} className={`${interestInfo.bgColor} rounded-xl p-6 border ${interestInfo.borderColor}`}>
-                      <h3 className="font-semibold text-gray-900 mb-3">
+                    <div key={interest} className={`${darkStyle.bgColor} rounded-xl p-6 border ${darkStyle.borderColor} transition-all duration-300 hover:scale-[1.01]`}>
+                      <h3 className="font-semibold text-slate-300 mb-3 text-xs tracking-wider uppercase">
                         {index === 0 ? 'Primary Interest' : index === 1 ? 'Secondary Interest' : 'Third Interest'}
                       </h3>
                       <div className="flex items-center space-x-3 mb-4">
-                        <FaBrain className={`${interestInfo.color} text-2xl`} />
-                        <span className="text-lg font-bold text-gray-900">
+                        <FaBrain className={`${darkStyle.color} text-2xl`} />
+                        <span className="text-lg font-bold text-white">
                           {interestInfo.name}
                         </span>
                       </div>
-                      <div className="bg-white rounded-lg p-4">
-                        <p className="text-sm text-gray-600 mb-3">{interestInfo.description}</p>
+                      <div className="bg-[#0e121d]/80 border border-white/5 rounded-lg p-4">
+                        <p className="text-sm text-slate-300 mb-3">{interestInfo.description}</p>
                         {latestAssessment.scores && (
                           <div className="flex items-center justify-between">
-                            <span className="text-xs text-gray-500">Interest Score</span>
-                            <span className="text-sm font-semibold text-gray-900">
+                            <span className="text-xs text-slate-400">Interest Score</span>
+                            <span className="text-sm font-semibold text-white">
                               {latestAssessment.scores[interest] || 0}/20
                             </span>
                           </div>
@@ -376,25 +393,27 @@ const StudentDashboard = () => {
               {/* Career Recommendations */}
               {latestAssessment.recommendations && latestAssessment.recommendations.length > 0 && (
                 <div className="mt-8">
-                  <h3 className="text-lg font-bold text-gray-900 mb-4">Recommended Career Paths</h3>
+                  <h3 className="text-lg font-bold text-white mb-4 border-b border-white/5 pb-2">Recommended Career Paths</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {latestAssessment.recommendations.slice(0, 6).map((career, index) => (
-                      <div key={index} className="bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
-                        <h4 className="font-semibold text-gray-900 mb-2">{career.title}</h4>
-                        <p className="text-sm text-gray-600 mb-3">{career.description}</p>
-                        <div className="space-y-1 text-xs">
+                      <div key={index} className="bg-white/3 backdrop-blur-md border border-white/5 hover:border-white/10 rounded-xl p-4 hover:bg-white/5 transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                          <h4 className="font-semibold text-slate-100 mb-2">{career.title}</h4>
+                          <p className="text-sm text-slate-400 mb-3">{career.description}</p>
+                        </div>
+                        <div className="space-y-1 text-xs bg-white/5 p-3 rounded-lg border border-white/5 mt-auto">
                           <div className="flex justify-between">
-                            <span className="text-gray-500">Growth:</span>
-                            <span className="text-gray-700">{career.growth}</span>
+                            <span className="text-slate-400">Growth:</span>
+                            <span className="text-purple-300 font-medium">{career.growth}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-500">Education:</span>
-                            <span className="text-gray-700">{career.education}</span>
+                            <span className="text-slate-400">Education:</span>
+                            <span className="text-cyan-300 font-medium">{career.education}</span>
                           </div>
                           {career.matchScore && (
                             <div className="flex justify-between">
-                              <span className="text-gray-500">Match Score:</span>
-                              <span className="text-blue-600 font-semibold">{career.matchScore}%</span>
+                              <span className="text-slate-400">Match Score:</span>
+                              <span className="text-emerald-400 font-semibold">{career.matchScore}%</span>
                             </div>
                           )}
                         </div>
@@ -409,11 +428,11 @@ const StudentDashboard = () => {
 
         {/* No Assessment CTA */}
         {!latestAssessment && (
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-sm text-white mb-8">
+          <div className="bg-gradient-to-r from-purple-900/40 to-cyan-900/40 border border-purple-500/20 backdrop-blur-xl rounded-2xl shadow-2xl text-white mb-8">
             <div className="p-8 text-center">
-              <FaBrain className="text-4xl mx-auto mb-4 opacity-90" />
-              <h2 className="text-2xl font-bold mb-3">Discover Your Ideal Career Path</h2>
-              <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
+              <FaBrain className="text-4xl mx-auto mb-4 text-purple-400 animate-pulse" />
+              <h2 className="text-2xl font-bold mb-3 bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">Discover Your Ideal Career Path</h2>
+              <p className="text-slate-300 mb-6 max-w-2xl mx-auto">
                 Take our comprehensive career assessment to receive personalized recommendations 
                 based on your interests, skills, and personality. Get insights into careers that 
                 truly match who you are.
@@ -421,12 +440,12 @@ const StudentDashboard = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link
                   to="/assessment"
-                  className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition duration-200 flex items-center space-x-2"
+                  className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-purple-700 hover:to-cyan-600 transition-all duration-200 flex items-center space-x-2 border border-white/10 shadow-lg"
                 >
                   <FaBullseye />
                   <span>Take Career Assessment</span>
                 </Link>
-                <div className="text-blue-100 text-sm">
+                <div className="text-slate-400 text-sm">
                   ⏱️ Takes 10-15 minutes • Get instant results
                 </div>
               </div>
@@ -438,16 +457,16 @@ const StudentDashboard = () => {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
             {/* Continue Learning */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
-              <div className="p-6 border-b border-gray-100">
+            <div className="bg-white/3 backdrop-blur-md border border-white/5 rounded-2xl shadow-lg">
+              <div className="p-6 border-b border-white/5">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h2 className="text-xl font-semibold text-gray-900">Continue Learning</h2>
-                    <p className="text-gray-600 text-sm mt-1">Pick up where you left off</p>
+                    <h2 className="text-xl font-semibold text-white">Continue Learning</h2>
+                    <p className="text-slate-400 text-sm mt-1">Pick up where you left off</p>
                   </div>
                   <Link
                     to="/my-courses"
-                    className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center"
+                    className="text-cyan-400 hover:text-cyan-300 text-sm font-medium flex items-center transition-colors"
                   >
                     View All <FaArrowRight className="ml-1" />
                   </Link>
@@ -456,14 +475,14 @@ const StudentDashboard = () => {
               <div className="p-6">
                 {currentCourses.length === 0 ? (
                   <div className="text-center py-12">
-                    <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <FaBookOpen className="text-blue-400 text-2xl" />
+                    <div className="w-16 h-16 bg-white/5 border border-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <FaBookOpen className="text-purple-400 text-2xl" />
                     </div>
-                    <h3 className="text-gray-700 font-semibold mb-2">No courses yet</h3>
-                    <p className="text-gray-500 text-sm mb-6">Enroll in a course to start your learning journey.</p>
+                    <h3 className="text-slate-200 font-semibold mb-2">No courses yet</h3>
+                    <p className="text-slate-400 text-sm mb-6">Enroll in a course to start your learning journey.</p>
                     <Link
                       to="/courses"
-                      className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-200 inline-flex items-center space-x-2 font-medium"
+                      className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white px-6 py-2 rounded-lg hover:from-purple-700 hover:to-cyan-600 transition duration-200 inline-flex items-center space-x-2 font-medium border border-white/10 shadow-lg"
                     >
                       <FaPlus className="text-sm" />
                       <span>Browse Courses</span>
@@ -474,22 +493,22 @@ const StudentDashboard = () => {
                     {currentCourses.map((course) => (
                       <div
                         key={course.id}
-                        className="flex items-center space-x-4 p-4 border border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-md transition duration-200 group"
+                        className="flex items-center space-x-4 p-4 bg-white/3 border border-white/5 rounded-xl hover:border-white/10 transition duration-200 group"
                       >
-                        <div className="w-20 h-20 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center">
-                          <FaBookOpen className="text-blue-600 text-2xl" />
+                        <div className="w-20 h-20 bg-white/5 border border-white/5 rounded-xl flex items-center justify-center text-purple-400">
+                          <FaBookOpen className="text-2xl" />
                         </div>
                         <div className="flex-1">
-                          <h3 className="font-semibold text-gray-900">{course.title}</h3>
-                          <p className="text-sm text-gray-600 mb-2">by {course.instructor}</p>
+                          <h3 className="font-semibold text-slate-200">{course.title}</h3>
+                          <p className="text-sm text-slate-400 mb-2">by {course.instructor}</p>
                           <div className="mt-3">
                             <div className="flex items-center justify-between text-sm mb-1">
-                              <span className="text-gray-600">Progress</span>
-                              <span className="font-medium text-gray-900">{course.progress}%</span>
+                              <span className="text-slate-400">Progress</span>
+                              <span className="font-medium text-white">{course.progress}%</span>
                             </div>
-                            <div className="w-full bg-gray-200 rounded-full h-2">
+                            <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
                               <div
-                                className="bg-gradient-to-r from-blue-500 to-indigo-600 h-2 rounded-full"
+                                className="bg-gradient-to-r from-purple-600 to-cyan-500 h-2 rounded-full shadow-[0_0_8px_rgba(124,58,237,0.3)]"
                                 style={{ width: `${course.progress}%` }}
                               ></div>
                             </div>
@@ -504,26 +523,26 @@ const StudentDashboard = () => {
 
             {/* Recent Activity */}
             {recentActivity.length > 0 && (
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
-                <div className="p-6 border-b border-gray-100">
-                  <h2 className="text-xl font-semibold text-gray-900">Recent Activity</h2>
-                  <p className="text-gray-600 text-sm mt-1">Your learning highlights</p>
+              <div className="bg-white/3 backdrop-blur-md border border-white/5 rounded-2xl shadow-lg">
+                <div className="p-6 border-b border-white/5">
+                  <h2 className="text-xl font-semibold text-white">Recent Activity</h2>
+                  <p className="text-slate-400 text-sm mt-1">Your learning highlights</p>
                 </div>
                 <div className="p-6">
                   <div className="space-y-4">
                     {recentActivity.map((activity) => (
                       <div key={activity.id} className="flex items-start space-x-3">
                         <div className={`p-2 rounded-lg ${
-                          activity.type === 'completion' ? 'bg-green-100' :
-                          activity.type === 'certificate' ? 'bg-yellow-100' : 'bg-blue-100'
+                          activity.type === 'completion' ? 'bg-emerald-500/10 text-emerald-400' :
+                          activity.type === 'certificate' ? 'bg-amber-500/10 text-amber-400' : 'bg-blue-500/10 text-blue-400'
                         }`}>
-                          {activity.type === 'completion' && <FaGraduationCap className="text-green-600 text-sm" />}
-                          {activity.type === 'certificate' && <FaAward className="text-yellow-600 text-sm" />}
-                          {activity.type === 'enrollment' && <FaBookOpen className="text-blue-600 text-sm" />}
+                          {activity.type === 'completion' && <FaGraduationCap className="text-sm" />}
+                          {activity.type === 'certificate' && <FaAward className="text-sm" />}
+                          {activity.type === 'enrollment' && <FaBookOpen className="text-sm" />}
                         </div>
                         <div className="flex-1">
-                          <p className="text-sm text-gray-900">{activity.message}</p>
-                          <p className="text-xs text-gray-500 mt-1">{activity.time}</p>
+                          <p className="text-sm text-slate-200">{activity.message}</p>
+                          <p className="text-xs text-slate-500 mt-1">{activity.time}</p>
                         </div>
                       </div>
                     ))}
@@ -536,27 +555,27 @@ const StudentDashboard = () => {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Achievements */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
-              <div className="p-6 border-b border-gray-100">
-                <h3 className="text-lg font-semibold text-gray-900">Achievements</h3>
-                <p className="text-gray-600 text-sm mt-1">Your milestones</p>
+            <div className="bg-white/3 backdrop-blur-md border border-white/5 rounded-2xl shadow-lg">
+              <div className="p-6 border-b border-white/5">
+                <h3 className="text-lg font-semibold text-white">Achievements</h3>
+                <p className="text-slate-400 text-sm mt-1">Your milestones</p>
               </div>
               <div className="p-6">
                 {achievements.length === 0 ? (
                   <div className="text-center py-6">
-                    <FaTrophy className="text-gray-300 text-3xl mx-auto mb-3" />
-                    <p className="text-gray-500 text-sm">Complete courses to earn achievements</p>
+                    <FaTrophy className="text-slate-500 text-3xl mx-auto mb-3" />
+                    <p className="text-slate-400 text-sm">Complete courses to earn achievements</p>
                   </div>
                 ) : (
                   <div className="space-y-4">
                     {achievements.slice(0, 3).map((achievement) => (
                       <div key={achievement.id} className="flex items-center space-x-3">
-                        <div className="p-3 rounded-xl bg-yellow-100">
-                          <FaTrophy className="text-yellow-600 text-lg" />
+                        <div className="p-3 rounded-xl bg-amber-500/10 text-amber-400">
+                          <FaTrophy className="text-lg" />
                         </div>
                         <div className="flex-1">
-                          <p className="font-medium text-gray-900 text-sm">{achievement.title}</p>
-                          <p className="text-xs text-gray-500">{achievement.date}</p>
+                          <p className="font-medium text-slate-200 text-sm">{achievement.title}</p>
+                          <p className="text-xs text-slate-500">{achievement.date}</p>
                         </div>
                       </div>
                     ))}
@@ -565,20 +584,20 @@ const StudentDashboard = () => {
               </div>
             </div>
 
-            {/* Upcoming Deadlines — only show if user has real data */}
+            {/* Upcoming Deadlines */}
             {upcomingDeadlines.length > 0 && (
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
-                <div className="p-6 border-b border-gray-100">
-                  <h3 className="text-lg font-semibold text-gray-900">Upcoming Deadlines</h3>
-                  <p className="text-gray-600 text-sm mt-1">Stay on track</p>
+              <div className="bg-white/3 backdrop-blur-md border border-white/5 rounded-2xl shadow-lg">
+                <div className="p-6 border-b border-white/5">
+                  <h3 className="text-lg font-semibold text-white">Upcoming Deadlines</h3>
+                  <p className="text-slate-400 text-sm mt-1">Stay on track</p>
                 </div>
                 <div className="p-6 space-y-4">
                   {upcomingDeadlines.map((deadline) => (
                     <div key={deadline.id} className="flex items-center justify-between">
                       <div className="flex-1">
-                        <p className="font-medium text-gray-900 text-sm">{deadline.assignment}</p>
-                        <p className="text-xs text-gray-600">{deadline.course}</p>
-                        <p className="text-xs text-gray-500 mt-1">{deadline.dueDate}</p>
+                        <p className="font-medium text-slate-200 text-sm">{deadline.assignment}</p>
+                        <p className="text-xs text-slate-400">{deadline.course}</p>
+                        <p className="text-xs text-slate-500 mt-1">{deadline.dueDate}</p>
                       </div>
                     </div>
                   ))}
@@ -587,19 +606,19 @@ const StudentDashboard = () => {
             )}
 
             {/* Enrolled Courses Section */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
+            <div className="bg-white/3 backdrop-blur-md border border-white/5 rounded-2xl shadow-lg">
               <div className="p-6">
                 <EnrolledCourses />
               </div>
             </div>
 
             {/* Quick Actions */}
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-6 text-white">
+            <div className="bg-gradient-to-r from-purple-900/40 to-cyan-900/40 border border-purple-500/20 backdrop-blur-md rounded-2xl p-6 text-white">
               <h3 className="text-lg font-semibold mb-2">Ready to Learn More?</h3>
-              <p className="text-blue-100 text-sm mb-4">Explore new courses and expand your skills</p>
+              <p className="text-slate-300 text-sm mb-4">Explore new courses and expand your skills</p>
               <Link
                 to="/courses"
-                className="bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-100 transition duration-200 inline-flex items-center space-x-2 font-medium"
+                className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white px-4 py-2 rounded-lg hover:from-purple-700 hover:to-cyan-600 transition duration-200 inline-flex items-center space-x-2 font-medium border border-white/10"
               >
                 <FaPlus />
                 <span>Browse Courses</span>

@@ -32,37 +32,37 @@ const ONetCareerAssessment = () => {
       name: "Realistic",
       icon: FaWrench,
       description: "Building, fixing, working with your hands",
-      color: "text-green-600"
+      color: "text-emerald-400"
     },
     I: {
       name: "Investigative", 
       icon: FaMicroscope,
       description: "Researching, analyzing, solving problems",
-      color: "text-blue-600"
+      color: "text-sky-400"
     },
     A: {
       name: "Artistic",
       icon: FaPalette,
       description: "Creating, designing, expressing ideas",
-      color: "text-purple-600"
+      color: "text-purple-400"
     },
     S: {
       name: "Social",
       icon: FaUsers,
       description: "Helping, teaching, caring for others",
-      color: "text-orange-600"
+      color: "text-amber-400"
     },
     E: {
       name: "Enterprising",
       icon: FaBriefcase,
       description: "Leading, managing, selling, organizing",
-      color: "text-red-600"
+      color: "text-rose-400"
     },
     C: {
       name: "Conventional",
       icon: FaCalculator,
       description: "Organizing, following procedures, attention to detail",
-      color: "text-indigo-600"
+      color: "text-indigo-400"
     }
   };
 
@@ -714,32 +714,36 @@ const ONetCareerAssessment = () => {
     const recommendations = getCareerRecommendations(topInterests);
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="bg-white rounded-2xl shadow-xl p-8">
+      <div className="min-h-screen bg-[#0a0d14] text-slate-100 py-12 relative overflow-hidden">
+        {/* Background Glows */}
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-900/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-cyan-900/10 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="max-w-4xl mx-auto px-4 relative z-10">
+          <div className="bg-white/3 backdrop-blur-xl border border-white/5 rounded-2xl shadow-2xl p-8">
             <div className="text-center mb-8">
-              <FaCheckCircle className="text-green-500 text-6xl mx-auto mb-4" />
-              <h1 className="text-3xl font-bold text-gray-800 mb-2">Your Career Interest Profile</h1>
-              <p className="text-gray-600">Personalized career recommendations based on your interests</p>
+              <FaCheckCircle className="text-emerald-400 text-6xl mx-auto mb-4 drop-shadow-[0_0_15px_rgba(52,211,153,0.3)]" />
+              <h1 className="text-3xl font-bold text-white mb-2 bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">Your Career Interest Profile</h1>
+              <p className="text-slate-400">Personalized career recommendations based on your interests</p>
             </div>
 
             {/* Interest Scores */}
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">Your Top Interest Areas</h2>
+              <h2 className="text-2xl font-bold text-white mb-4 border-b border-white/5 pb-2">Your Top Interest Areas</h2>
               <div className="grid md:grid-cols-3 gap-4">
                 {Object.entries(scores).slice(0, 3).map(([category, score], index) => {
                   const interest = interestAreas[category];
                   const IconComponent = interest.icon;
                   return (
-                    <div key={category} className="bg-gradient-to-r from-indigo-50 to-blue-50 p-6 rounded-xl border-l-4 border-indigo-500 shadow-md">
+                    <div key={category} className="bg-white/3 backdrop-blur-md border border-white/5 hover:border-white/10 p-6 rounded-xl shadow-lg transition-all duration-300 hover:scale-[1.02]">
                       <div className="flex items-center mb-3">
                         <IconComponent className={`${interest.color} text-2xl mr-3`} />
                         <div>
-                          <h3 className="font-bold text-lg text-gray-800">{index + 1}. {interest.name}</h3>
-                          <p className="text-sm text-gray-600">Score: {score}</p>
+                          <h3 className="font-bold text-lg text-slate-200">{index + 1}. {interest.name}</h3>
+                          <p className="text-sm text-slate-400">Score: {score}</p>
                         </div>
                       </div>
-                      <p className="text-gray-700 text-sm">{interest.description}</p>
+                      <p className="text-slate-300 text-sm">{interest.description}</p>
                     </div>
                   );
                 })}
@@ -748,48 +752,50 @@ const ONetCareerAssessment = () => {
 
             {/* Career Recommendations */}
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">Recommended Careers</h2>
+              <h2 className="text-2xl font-bold text-white mb-4 border-b border-white/5 pb-2">Recommended Careers</h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {recommendations.slice(0, 6).map((career, index) => (
-                  <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
-                    <h3 className="font-bold text-lg text-gray-800 mb-2">{career.title}</h3>
-                    <p className="text-gray-600 text-sm mb-3">{career.description}</p>
-                    <div className="space-y-1 text-xs mb-4">
-                      <p><span className="font-semibold">Growth:</span> {career.growth}</p>
-                      <p><span className="font-semibold">Education:</span> {career.education}</p>
+                  <div key={index} className="bg-white/3 backdrop-blur-md border border-white/5 hover:border-white/10 rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 shadow-lg flex flex-col justify-between">
+                    <div>
+                      <h3 className="font-bold text-lg text-slate-100 mb-2">{career.title}</h3>
+                      <p className="text-slate-400 text-sm mb-3">{career.description}</p>
+                      <div className="space-y-1 text-xs mb-4 text-slate-300 bg-white/5 p-3 rounded-lg border border-white/5">
+                        <p><span className="font-semibold text-slate-400">Growth:</span> <span className="text-purple-300">{career.growth}</span></p>
+                        <p><span className="font-semibold text-slate-400">Education:</span> <span className="text-cyan-300">{career.education}</span></p>
+                      </div>
                     </div>
                     
                     {/* Certifications Section */}
                     {career.certifications && career.certifications.length > 0 && (
-                      <div className="mt-4 pt-4 border-t border-gray-100">
-                        <h4 className="font-semibold text-sm text-gray-800 mb-2 flex items-center">
-                          <FaGraduationCap className="mr-1 text-indigo-600" />
+                      <div className="mt-4 pt-4 border-t border-white/5">
+                        <h4 className="font-semibold text-sm text-slate-200 mb-2 flex items-center">
+                          <FaGraduationCap className="mr-1 text-purple-400" />
                           Key Certifications:
                         </h4>
                         <div className="space-y-2">
                           {career.certifications.slice(0, 2).map((cert, certIndex) => (
-                            <div key={certIndex} className="bg-indigo-50 rounded-lg p-3">
+                            <div key={certIndex} className="bg-white/5 border border-white/5 hover:border-purple-500/20 rounded-lg p-3 transition-all duration-200">
                               <a 
                                 href={cert.link} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="block hover:text-indigo-700 transition-colors"
+                                className="block text-slate-200 hover:text-purple-400 transition-colors"
                               >
                                 <div className="flex items-start justify-between">
                                   <div className="flex-1">
-                                    <h5 className="font-medium text-sm text-indigo-800 mb-1 flex items-center">
+                                    <h5 className="font-medium text-sm text-purple-300 mb-1 flex items-center">
                                       {cert.name}
-                                      <FaExternalLinkAlt className="ml-1 text-xs" />
+                                      <FaExternalLinkAlt className="ml-1 text-xs text-purple-400" />
                                     </h5>
-                                    <p className="text-xs text-gray-600 mb-1">{cert.provider}</p>
-                                    <p className="text-xs font-medium text-green-600">{cert.cost}</p>
+                                    <p className="text-xs text-slate-400 mb-1">{cert.provider}</p>
+                                    <p className="text-xs font-semibold text-emerald-400">{cert.cost}</p>
                                   </div>
                                 </div>
                               </a>
                             </div>
                           ))}
                           {career.certifications.length > 2 && (
-                            <p className="text-xs text-gray-500 italic">+{career.certifications.length - 2} more certifications available</p>
+                            <p className="text-xs text-slate-500 italic">+{career.certifications.length - 2} more certifications available</p>
                           )}
                         </div>
                       </div>
@@ -800,9 +806,9 @@ const ONetCareerAssessment = () => {
             </div>
 
             {/* Next Steps */}
-            <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-xl mb-6">
-              <h2 className="text-xl font-bold text-gray-800 mb-3">Next Steps</h2>
-              <ul className="space-y-2 text-gray-700">
+            <div className="bg-gradient-to-r from-purple-900/10 to-cyan-900/10 border border-purple-500/20 p-6 rounded-xl mb-6 shadow-inner">
+              <h2 className="text-xl font-bold text-white mb-3">Next Steps</h2>
+              <ul className="space-y-2 text-slate-300">
                 <li>• Research the recommended careers that interest you</li>
                 <li>• Look into educational requirements and training programs</li>
                 <li>• Connect with professionals in these fields</li>
@@ -816,7 +822,7 @@ const ONetCareerAssessment = () => {
                 {userProfile && (
                   <button
                     onClick={() => navigate('/dashboard')}
-                    className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-3 rounded-lg font-bold hover:from-green-700 hover:to-emerald-700 transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center justify-center"
+                    className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white px-8 py-3 rounded-lg font-bold hover:from-purple-700 hover:to-cyan-600 transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center justify-center border border-white/10"
                   >
                     <FaTachometerAlt className="mr-2" />
                     View Your Dashboard
@@ -824,7 +830,7 @@ const ONetCareerAssessment = () => {
                 )}
                 <button
                   onClick={restartAssessment}
-                  className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white px-8 py-3 rounded-lg font-bold hover:from-indigo-700 hover:to-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
+                  className="bg-white/5 hover:bg-white/10 text-white px-8 py-3 rounded-lg font-bold transition-all duration-200 transform hover:scale-105 border border-white/10 shadow-lg"
                 >
                   Take Assessment Again
                 </button>
@@ -840,24 +846,28 @@ const ONetCareerAssessment = () => {
   const progress = ((currentQuestion + 1) / questions.length) * 100;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8">
-      <div className="max-w-2xl mx-auto px-4">
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+    <div className="min-h-screen bg-[#0a0d14] text-slate-100 py-12 relative overflow-hidden">
+      {/* Background Glows */}
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-900/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-cyan-900/10 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="max-w-2xl mx-auto px-4 relative z-10">
+        <div className="bg-white/3 backdrop-blur-xl border border-white/5 rounded-2xl shadow-2xl p-8">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">Career Interest Discovery</h1>
-            <p className="text-gray-600">Find careers that match your passions and unlock your potential</p>
+            <h1 className="text-3xl font-bold text-white mb-2 bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">Career Interest Discovery</h1>
+            <p className="text-slate-400">Find careers that match your passions and unlock your potential</p>
           </div>
 
           {/* Progress Bar */}
           <div className="mb-8">
-            <div className="flex justify-between text-sm text-gray-600 mb-2">
+            <div className="flex justify-between text-sm text-slate-400 mb-2">
               <span>Question {currentQuestion + 1} of {questions.length}</span>
               <span>{Math.round(progress)}% Complete</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-3">
+            <div className="w-full bg-white/10 rounded-full h-3 overflow-hidden">
               <div 
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 h-3 rounded-full transition-all duration-500 shadow-sm"
+                className="bg-gradient-to-r from-purple-600 to-cyan-500 h-3 rounded-full transition-all duration-500 shadow-[0_0_12px_rgba(124,58,237,0.5)]"
                 style={{ width: `${progress}%` }}
               ></div>
             </div>
@@ -865,27 +875,27 @@ const ONetCareerAssessment = () => {
 
           {/* Question */}
           <div className="text-center mb-8">
-            <h2 className="text-xl font-semibold text-gray-800 mb-6">
+            <h2 className="text-xl font-semibold text-slate-200 mb-6">
               How much would you like this activity?
             </h2>
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border-l-4 border-indigo-500 shadow-sm">
-              <p className="text-lg font-medium text-gray-800">{currentQ.text}</p>
+            <div className="bg-white/5 border border-white/10 backdrop-blur-md p-6 rounded-xl shadow-inner border-l-4 border-purple-500">
+              <p className="text-lg font-medium text-slate-200">{currentQ.text}</p>
             </div>
           </div>
 
           {/* Answer Options */}
           <div className="space-y-3 mb-8">
             {[
-              { value: 'strongly_like', label: 'Strongly Like', color: 'bg-indigo-600 hover:bg-indigo-700 border-l-4 border-indigo-800' },
-              { value: 'like', label: 'Like', color: 'bg-blue-600 hover:bg-blue-700 border-l-4 border-blue-800' },
-              { value: 'unsure', label: 'Unsure', color: 'bg-slate-500 hover:bg-slate-600 border-l-4 border-slate-700' },
-              { value: 'dislike', label: 'Dislike', color: 'bg-slate-600 hover:bg-slate-700 border-l-4 border-slate-800' },
-              { value: 'strongly_dislike', label: 'Strongly Dislike', color: 'bg-slate-700 hover:bg-slate-800 border-l-4 border-slate-900' }
+              { value: 'strongly_like', label: 'Strongly Like', color: 'bg-emerald-600/20 hover:bg-emerald-600/40 text-emerald-400 border border-emerald-500/30 hover:border-emerald-500/60 shadow-[0_0_15px_rgba(16,185,129,0.15)]' },
+              { value: 'like', label: 'Like', color: 'bg-cyan-600/20 hover:bg-cyan-600/40 text-cyan-400 border border-cyan-500/30 hover:border-cyan-500/60 shadow-[0_0_15px_rgba(6,182,212,0.15)]' },
+              { value: 'unsure', label: 'Unsure', color: 'bg-slate-700/20 hover:bg-slate-700/40 text-slate-300 border border-slate-600/30 hover:border-slate-600/60' },
+              { value: 'dislike', label: 'Dislike', color: 'bg-rose-600/20 hover:bg-rose-600/40 text-rose-400 border border-rose-500/30 hover:border-rose-500/60' },
+              { value: 'strongly_dislike', label: 'Strongly Dislike', color: 'bg-red-600/20 hover:bg-red-600/40 text-red-400 border border-red-500/30 hover:border-red-500/60' }
             ].map((option) => (
               <button
                 key={option.value}
                 onClick={() => handleAnswer(option.value)}
-                className={`w-full p-4 text-white font-semibold rounded-lg transition-all duration-200 transform hover:scale-[1.02] shadow-md hover:shadow-lg ${option.color}`}
+                className={`w-full p-4 font-semibold rounded-lg transition-all duration-200 transform hover:scale-[1.01] shadow-md ${option.color}`}
               >
                 {option.label}
               </button>
@@ -899,15 +909,15 @@ const ONetCareerAssessment = () => {
               disabled={currentQuestion === 0}
               className={`flex items-center px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
                 currentQuestion === 0 
-                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
-                  : 'bg-slate-600 text-white hover:bg-slate-700 shadow-md hover:shadow-lg'
+                  ? 'bg-white/5 text-slate-500 border border-white/5 cursor-not-allowed' 
+                  : 'bg-white/5 text-slate-300 hover:bg-white/10 border border-white/10 shadow-md hover:shadow-lg'
               }`}
             >
               <FaChevronLeft className="mr-2" />
               Previous
             </button>
             
-            <div className="text-sm text-gray-500 flex items-center bg-gray-50 px-4 py-2 rounded-lg">
+            <div className="text-sm text-slate-400 flex items-center bg-white/5 border border-white/5 px-4 py-2 rounded-lg">
               Complete at least 30 questions to see results
             </div>
           </div>

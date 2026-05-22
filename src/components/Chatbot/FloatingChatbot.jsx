@@ -180,52 +180,52 @@ const FloatingChatbot = () => {
         <div className="fixed bottom-6 right-6 z-50">
           <button
             onClick={() => setIsOpen(true)}
-            className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 animate-pulse"
+            className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white p-4 rounded-full shadow-[0_0_20px_rgba(124,58,237,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] transform hover:scale-110 transition-all duration-300 animate-pulse border border-white/10"
           >
             <FaComments className="text-2xl" />
           </button>
           {/* Tooltip */}
-          <div className="absolute bottom-16 right-0 bg-gray-800 text-white px-3 py-2 rounded-lg text-sm whitespace-nowrap opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+          <div className="absolute bottom-16 right-0 bg-slate-800 border border-slate-700 text-white px-3 py-2 rounded-lg text-sm whitespace-nowrap opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none shadow-xl">
             Need help? Chat with our assistant!
-            <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-l-transparent border-r-4 border-r-transparent border-t-4 border-t-gray-800"></div>
+            <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-l-transparent border-r-4 border-r-transparent border-t-4 border-t-slate-800"></div>
           </div>
         </div>
       )}
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 w-96 h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-200 z-50 flex flex-col overflow-hidden">
+        <div className="fixed bottom-6 right-6 w-96 h-[500px] bg-[#0a0d14]/95 backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/10 z-50 flex flex-col overflow-hidden">
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 flex items-center justify-between">
+          <div className="bg-gradient-to-r from-purple-900/80 to-cyan-900/80 backdrop-blur-md text-white p-4 flex items-center justify-between border-b border-white/5">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                <FaRobot className="text-blue-600 text-xl" />
+              <div className="w-10 h-10 bg-white/5 border border-white/10 rounded-full flex items-center justify-center">
+                <FaRobot className="text-purple-400 text-xl" />
               </div>
               <div>
-                <h3 className="font-bold">Career Assistant</h3>
-                <p className="text-sm opacity-90">Here to help you succeed!</p>
+                <h3 className="font-bold text-slate-100 text-sm">Career Assistant</h3>
+                <p className="text-xs text-slate-400">Here to help you succeed!</p>
               </div>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-white hover:bg-white hover:bg-opacity-20 p-2 rounded-full transition-colors"
+              className="text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-full transition-colors"
             >
               <FaTimes />
             </button>
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#080a0f] border-b border-white/5">
             {messages.map((message) => (
               <div key={message.id} className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}>
                 <div className={`max-w-[80%] ${message.isBot ? 'order-2' : 'order-1'}`}>
                   <div className={`flex items-start space-x-2 ${message.isBot ? '' : 'flex-row-reverse space-x-reverse'}`}>
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${message.isBot ? 'bg-blue-100' : 'bg-indigo-100'}`}>
-                      {message.isBot ? <FaRobot className="text-blue-600" /> : <FaUser className="text-indigo-600" />}
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${message.isBot ? 'bg-purple-500/10 text-purple-400' : 'bg-cyan-500/10 text-cyan-400'}`}>
+                      {message.isBot ? <FaRobot className="text-xs" /> : <FaUser className="text-xs" />}
                     </div>
-                    <div className={`rounded-2xl px-4 py-2 ${message.isBot ? 'bg-white border border-gray-200' : 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white'}`}>
-                      <p className="text-sm whitespace-pre-line">{message.text}</p>
-                      <p className={`text-xs mt-1 ${message.isBot ? 'text-gray-500' : 'text-blue-100'}`}>
+                    <div className={`rounded-2xl px-4 py-2 ${message.isBot ? 'bg-white/5 border border-white/5 text-slate-200' : 'bg-gradient-to-r from-purple-600/90 to-cyan-500/90 text-white border border-white/10'}`}>
+                      <p className="text-sm whitespace-pre-line leading-relaxed">{message.text}</p>
+                      <p className={`text-[10px] mt-1 text-right ${message.isBot ? 'text-slate-400' : 'text-cyan-200'}`}>
                         {formatTime(message.timestamp)}
                       </p>
                     </div>
@@ -233,12 +233,12 @@ const FloatingChatbot = () => {
                   
                   {/* Quick Replies */}
                   {message.quickReplies && message.quickReplies.length > 0 && (
-                    <div className="mt-3 space-y-2">
+                    <div className="mt-3 ml-10 space-y-2">
                       {message.quickReplies.map((reply, index) => (
                         <button
                           key={index}
                           onClick={() => handleQuickReply(reply.text, reply.action)}
-                          className="block w-full text-left bg-blue-50 hover:bg-blue-100 text-blue-700 px-3 py-2 rounded-lg text-sm border border-blue-200 transition-colors"
+                          className="block w-full text-left bg-white/5 hover:bg-white/10 text-slate-200 px-3 py-2 rounded-lg text-xs border border-white/5 hover:border-purple-500/20 transition-all duration-200"
                         >
                           {reply.text}
                         </button>
@@ -253,14 +253,14 @@ const FloatingChatbot = () => {
             {isTyping && (
               <div className="flex justify-start">
                 <div className="flex items-start space-x-2">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                    <FaRobot className="text-blue-600" />
+                  <div className="w-8 h-8 bg-purple-500/10 rounded-full flex items-center justify-center text-purple-400 shrink-0">
+                    <FaRobot className="text-xs" />
                   </div>
-                  <div className="bg-white border border-gray-200 rounded-2xl px-4 py-2">
-                    <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="bg-white/5 border border-white/5 rounded-2xl px-4 py-2">
+                    <div className="flex space-x-1 py-1">
+                      <div className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce"></div>
+                      <div className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                     </div>
                   </div>
                 </div>
@@ -270,7 +270,7 @@ const FloatingChatbot = () => {
           </div>
 
           {/* Input */}
-          <div className="p-4 border-t border-gray-200 bg-white">
+          <div className="p-4 bg-[#0a0d14]">
             <div className="flex space-x-2">
               <input
                 ref={inputRef}
@@ -279,14 +279,14 @@ const FloatingChatbot = () => {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Type your message..."
-                className="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:border-blue-500 text-sm"
+                className="flex-1 bg-white/5 border border-white/10 rounded-full px-4 py-2 focus:outline-none focus:border-purple-500 focus:bg-white/10 text-sm text-slate-200 placeholder-slate-500"
               />
               <button
                 onClick={() => handleSendMessage()}
                 disabled={!inputValue.trim()}
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-2 rounded-full hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white p-2 rounded-full hover:shadow-lg transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed shrink-0 border border-white/10"
               >
-                <FaPaperPlane />
+                <FaPaperPlane className="text-sm" />
               </button>
             </div>
           </div>
