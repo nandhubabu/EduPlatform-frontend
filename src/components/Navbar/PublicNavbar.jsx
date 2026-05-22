@@ -1,163 +1,279 @@
-import { Fragment } from "react";
-import { Disclosure } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
-import { 
-  FaBookOpen, 
-  FaGraduationCap, 
-  FaHome,
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import {
+  FaBookOpen,
+  FaGraduationCap,
   FaLightbulb,
-  FaTrophy,
   FaSignInAlt,
-  FaUserPlus
+  FaUserPlus,
+  FaBars,
+  FaTimes,
 } from "react-icons/fa";
 
 export default function PublicNavbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const navLinks = [
+    { to: "/courses", label: "Courses", icon: <FaBookOpen /> },
+    { to: "/assessment", label: "Career Explorer", icon: <FaLightbulb /> },
+  ];
+
+  const isActive = (path) => location.pathname === path;
+
   return (
-    <Disclosure as="nav" className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
-      {({ open }) => (
-        <>
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex h-16 justify-between items-center">
-              {/* Logo */}
-              <div className="flex items-center">
-                <Link to="/" className="flex items-center space-x-2">
-                  <div className="h-10 w-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
-                    <FaGraduationCap className="h-6 w-6 text-white" />
-                  </div>
-                  <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                    EduPlatform
-                  </span>
-                </Link>
-              </div>
-
-              {/* Desktop Navigation */}
-              <div className="hidden md:flex md:items-center md:space-x-6">
-                <Link
-                  to="/"
-                  className="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition duration-200"
-                >
-                  <FaHome className="text-sm" />
-                  <span>Home</span>
-                </Link>
-                <Link
-                  to="/courses"
-                  className="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition duration-200"
-                >
-                  <FaBookOpen className="text-sm" />
-                  <span>Browse Courses</span>
-                </Link>
-                <Link
-                  to="/assessment"
-                  className="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition duration-200"
-                >
-                  <FaLightbulb className="text-sm" />
-                  <span>Career Explorer</span>
-                </Link>
-                <Link
-                  to="/success"
-                  className="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition duration-200"
-                >
-                  <FaTrophy className="text-sm" />
-                  <span>Success Stories</span>
-                </Link>
-              </div>
-
-              {/* Right side items */}
-              <div className="flex items-center space-x-4">
-                {/* Mobile menu button */}
-                <div className="md:hidden">
-                  <Disclosure.Button className="relative inline-flex items-center justify-center rounded-lg p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
-                    <span className="absolute -inset-0.5" />
-                    <span className="sr-only">Open main menu</span>
-                    {open ? (
-                      <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                    ) : (
-                      <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                    )}
-                  </Disclosure.Button>
-                </div>
-
-                {/* Auth Buttons - Desktop */}
-                <div className="hidden md:flex md:items-center md:space-x-3">
-                  <Link
-                    to="/login"
-                    className="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition duration-200"
-                  >
-                    <FaSignInAlt className="text-sm" />
-                    <span>Sign In</span>
-                  </Link>
-                  <Link
-                    to="/register"
-                    className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-indigo-700 transition duration-200 shadow-sm"
-                  >
-                    <FaUserPlus className="text-sm" />
-                    <span>Get Started</span>
-                  </Link>
-                </div>
-              </div>
+    <>
+      <nav
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+          transition: "all 0.3s ease",
+          background: scrolled
+            ? "rgba(10, 13, 20, 0.9)"
+            : "rgba(10, 13, 20, 0.4)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          borderBottom: scrolled
+            ? "1px solid rgba(168, 85, 247, 0.2)"
+            : "1px solid rgba(255,255,255,0.05)",
+          boxShadow: scrolled ? "0 4px 30px rgba(0,0,0,0.4)" : "none",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1280px",
+            margin: "0 auto",
+            padding: "0 24px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            height: "68px",
+          }}
+        >
+          {/* Logo */}
+          <Link to="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "10px" }}>
+            <div
+              style={{
+                width: "38px",
+                height: "38px",
+                borderRadius: "10px",
+                background: "linear-gradient(135deg, #7c3aed, #06b6d4)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                boxShadow: "0 0 20px rgba(124, 58, 237, 0.4)",
+              }}
+            >
+              <FaGraduationCap style={{ color: "white", fontSize: "18px" }} />
             </div>
+            <span
+              style={{
+                fontSize: "20px",
+                fontWeight: 800,
+                background: "linear-gradient(135deg, #a855f7, #06b6d4)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                letterSpacing: "-0.5px",
+              }}
+            >
+              EduPlatform
+            </span>
+          </Link>
+
+          {/* Desktop Nav */}
+          <div style={{ display: "flex", alignItems: "center", gap: "4px" }} className="nav-desktop">
+            {navLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "7px",
+                  padding: "8px 16px",
+                  borderRadius: "8px",
+                  fontSize: "14px",
+                  fontWeight: 500,
+                  textDecoration: "none",
+                  color: isActive(link.to) ? "#a855f7" : "#94a3b8",
+                  background: isActive(link.to) ? "rgba(168, 85, 247, 0.1)" : "transparent",
+                  transition: "all 0.2s ease",
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive(link.to)) {
+                    e.currentTarget.style.color = "#e2e8f0";
+                    e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive(link.to)) {
+                    e.currentTarget.style.color = "#94a3b8";
+                    e.currentTarget.style.background = "transparent";
+                  }
+                }}
+              >
+                {link.icon}
+                {link.label}
+              </Link>
+            ))}
+
+            <div style={{ width: "1px", height: "24px", background: "rgba(255,255,255,0.1)", margin: "0 8px" }} />
+
+            <Link
+              to="/login"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "7px",
+                padding: "8px 16px",
+                borderRadius: "8px",
+                fontSize: "14px",
+                fontWeight: 500,
+                textDecoration: "none",
+                color: "#94a3b8",
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = "#e2e8f0";
+                e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = "#94a3b8";
+                e.currentTarget.style.background = "transparent";
+              }}
+            >
+              <FaSignInAlt />
+              Sign In
+            </Link>
+
+            <Link
+              to="/register"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "7px",
+                padding: "9px 20px",
+                borderRadius: "8px",
+                fontSize: "14px",
+                fontWeight: 600,
+                textDecoration: "none",
+                color: "white",
+                background: "linear-gradient(135deg, #7c3aed, #06b6d4)",
+                transition: "all 0.3s ease",
+                boxShadow: "0 0 15px rgba(124, 58, 237, 0.3)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.boxShadow = "0 0 25px rgba(124, 58, 237, 0.6)";
+                e.currentTarget.style.transform = "translateY(-1px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.boxShadow = "0 0 15px rgba(124, 58, 237, 0.3)";
+                e.currentTarget.style.transform = "translateY(0)";
+              }}
+            >
+              <FaUserPlus />
+              Get Started
+            </Link>
           </div>
 
-          {/* Mobile menu */}
-          <Disclosure.Panel className="md:hidden border-t border-gray-100">
-            <div className="px-4 py-3 space-y-2">
-              <Disclosure.Button
-                as={Link}
-                to="/"
-                className="flex items-center space-x-3 w-full px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition duration-200"
+          {/* Mobile Toggle */}
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="nav-mobile-btn"
+            style={{
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              borderRadius: "8px",
+              padding: "8px",
+              color: "#94a3b8",
+              cursor: "pointer",
+              display: "none",
+            }}
+          >
+            {mobileOpen ? <FaTimes size={18} /> : <FaBars size={18} />}
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        {mobileOpen && (
+          <div
+            style={{
+              padding: "16px 24px",
+              borderTop: "1px solid rgba(255,255,255,0.05)",
+              display: "flex",
+              flexDirection: "column",
+              gap: "8px",
+            }}
+          >
+            {navLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                onClick={() => setMobileOpen(false)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  padding: "12px 16px",
+                  borderRadius: "10px",
+                  fontSize: "15px",
+                  fontWeight: 500,
+                  textDecoration: "none",
+                  color: "#94a3b8",
+                  background: "rgba(255,255,255,0.03)",
+                }}
               >
-                <FaHome className="text-sm" />
-                <span>Home</span>
-              </Disclosure.Button>
-              <Disclosure.Button
-                as={Link}
-                to="/courses"
-                className="flex items-center space-x-3 w-full px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition duration-200"
-              >
-                <FaBookOpen className="text-sm" />
-                <span>Browse Courses</span>
-              </Disclosure.Button>
-              <Disclosure.Button
-                as={Link}
-                to="/assessment"
-                className="flex items-center space-x-3 w-full px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition duration-200"
-              >
-                <FaLightbulb className="text-sm" />
-                <span>Career Explorer</span>
-              </Disclosure.Button>
-              <Disclosure.Button
-                as={Link}
-                to="/success"
-                className="flex items-center space-x-3 w-full px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition duration-200"
-              >
-                <FaTrophy className="text-sm" />
-                <span>Success Stories</span>
-              </Disclosure.Button>
-              
-              {/* Mobile Auth Buttons */}
-              <div className="pt-3 border-t border-gray-100 space-y-2">
-                <Disclosure.Button
-                  as={Link}
-                  to="/login"
-                  className="flex items-center space-x-3 w-full px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition duration-200"
-                >
-                  <FaSignInAlt className="text-sm" />
-                  <span>Sign In</span>
-                </Disclosure.Button>
-                <Disclosure.Button
-                  as={Link}
-                  to="/register"
-                  className="flex items-center space-x-3 w-full px-3 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-indigo-700 transition duration-200"
-                >
-                  <FaUserPlus className="text-sm" />
-                  <span>Get Started</span>
-                </Disclosure.Button>
-              </div>
-            </div>
-          </Disclosure.Panel>
-        </>
-      )}
-    </Disclosure>
+                {link.icon}
+                {link.label}
+              </Link>
+            ))}
+            <Link
+              to="/login"
+              onClick={() => setMobileOpen(false)}
+              style={{
+                display: "flex", alignItems: "center", gap: "10px",
+                padding: "12px 16px", borderRadius: "10px",
+                fontSize: "15px", fontWeight: 500, textDecoration: "none",
+                color: "#94a3b8", background: "rgba(255,255,255,0.03)",
+              }}
+            >
+              <FaSignInAlt /> Sign In
+            </Link>
+            <Link
+              to="/register"
+              onClick={() => setMobileOpen(false)}
+              style={{
+                display: "flex", alignItems: "center", gap: "10px",
+                padding: "12px 16px", borderRadius: "10px",
+                fontSize: "15px", fontWeight: 600, textDecoration: "none",
+                color: "white",
+                background: "linear-gradient(135deg, #7c3aed, #06b6d4)",
+              }}
+            >
+              <FaUserPlus /> Get Started Free
+            </Link>
+          </div>
+        )}
+      </nav>
+
+      {/* Mobile responsive styles */}
+      <style>{`
+        @media (max-width: 768px) {
+          .nav-desktop { display: none !important; }
+          .nav-mobile-btn { display: flex !important; }
+        }
+      `}</style>
+    </>
   );
 }
